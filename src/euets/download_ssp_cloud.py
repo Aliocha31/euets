@@ -4,7 +4,7 @@ import s3fs
 import pandas as pd
 
 # Create filesystem object
-def download_data():
+def download_data_insta() -> None:
     S3_ENDPOINT_URL = "https://" + os.environ["AWS_S3_ENDPOINT"]
     print(S3_ENDPOINT_URL)
     fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': S3_ENDPOINT_URL})
@@ -16,11 +16,17 @@ def download_data():
     with fs.open(FILE_PATH_S3, mode="rb") as file_in:
         df_insta = pd.read_csv(file_in, sep=",")
 
+    return df_insta
+def download_data_acc() -> None:
+    S3_ENDPOINT_URL = "https://" + os.environ["AWS_S3_ENDPOINT"]
+    print(S3_ENDPOINT_URL)
+    fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': S3_ENDPOINT_URL})
 
+    BUCKET = "jubornier/"
     FILE_KEY2_S3 = "/euets/account.csv"
     FILE_PATH2_S3 = BUCKET + "/" + FILE_KEY2_S3
 
     with fs.open(FILE_PATH2_S3, mode="rb") as file_in:
         df_acc = pd.read_csv(file_in, sep=",")
     
-    return df_acc, df_insta
+    return df_acc
