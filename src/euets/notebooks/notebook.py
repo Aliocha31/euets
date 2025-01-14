@@ -3,6 +3,7 @@
 import os
 import s3fs
 import pandas as pd
+import openpyxl
 
 # %%
 # Download installation data
@@ -58,4 +59,18 @@ df_final = df_fr_merge.dropna(subset=["companyRegistrationNumber","addressMain"]
 df_final = df_final[["installation_id","companyRegistrationNumber", "addressMain", "addressSecondary", "postalCode", "city", "latitudeEutl" , "longitudeEutl"]]
 # %%
 print(f"Au final il y a {len(df_final)} entreprises")
+
+# %%
+df_final[df_final["addressMain"] == "-"].shape[0]
+
+# %%
+df_final[df_final["companyRegistrationNumber"] == "-"].shape[0]
+df_final = df_final[df_final["addressMain"] != "-"]
+
+# %% 
+print(f"Nous avons {len(df_final)} entreprises pour la France avec Adresse et Sirene")
+
+# %%
+file_name = "EUetsfirms.xlsx"
+df_final.to_excel(file_name)
 # %%
