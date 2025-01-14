@@ -38,8 +38,19 @@ print(f"Il manque le VAT de {df_fr_acc["companyRegistrationNumber"].isna().sum()
 
 # %%
 df_fr_insta = df_insta[df_insta["registry_id"] == "FR"].rename(columns={"id": "installation_id"})
+df_insta = df_insta[~((df_insta["isAircraftOperator"] == "True") | (df_insta["isMaritimeOperator"] == "True"))]
+# %%
+df_fr_insta["isAircraftOperator"]
+#%%
+df_fr_insta = df_fr_insta[~((df_fr_insta["isAircraftOperator"] == "True") | (df_fr_insta["isMaritimeOperator"] == "True"))]
+print(df_fr_insta)
 print(f"Il y a {len(df_fr_insta)} entreprises française in insta")
 print(f"Il manque l'adresse de {df_fr_insta["addressMain"].isna().sum()} entreprise(s) française(s)")
+
+#%%
+result = df_fr_insta["country_id"].equals(df_fr_insta["registry_id"])
+print(f"Comparaison country id et registry id résultat si sont identiques:{result}")
+#%% 
 
 # %%
 df_fr_acc["installation_id"].equals(df_fr_insta["installation_id"])
@@ -72,7 +83,7 @@ print(f"Nous avons {len(df_final)} entreprises pour la France avec Adresse et Si
 
 # %%
 file_name = "EUetsfirms.xlsx"
-df_final.to_excel(file_name)
+df_insta.to_excel(file_name)
 
 
 # %%
