@@ -73,4 +73,10 @@ print(f"Nous avons {len(df_final)} entreprises pour la France avec Adresse et Si
 # %%
 file_name = "EUetsfirms.xlsx"
 df_final.to_excel(file_name)
+
+
+# %%
+df_final["companyRegistrationNumber"].tolist()
+# %%
+df_final["companyRegistrationNumber"].to_string("Firms_siren_list")
 # %%
